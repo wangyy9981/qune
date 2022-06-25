@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './assets/js/rem.js'
 import './index.css'
+import './assets/iconfont/iconfont.css'
 import App from './pages/App'
 import reportWebVitals from './reportWebVitals'
 

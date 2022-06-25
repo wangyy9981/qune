@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            var g1 = new Date('')
+
+            // (YYYY-MM-DD)
+
+            var g2 = new Date('12-00')
+            console.log(g1.getTime() - g2.getTime())
+            if (g1.getTime() < g2.getTime()) document.write('g1 小于 g2')
+            else if (g1.getTime() > g2.getTime()) document.write('g1 大于 g2')
+            else document.write('两者相等')
+
+            function CompareDate(t1, t2) {
+                var date = new Date()
+                var a = t1.split(':')
+                var b = t2.split(':')
+                return date.setHours(a[0], a[1]) > date.setHours(b[0], b[1])
+            }
+            // 调用：
+            alert(CompareDate('12:00', '11:15'))
+        </script>
+    </body>
+</html>
