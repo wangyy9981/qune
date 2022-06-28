@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react'
-import { observer,inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import './App.scss'
-@inject('airpotStores')
+// @inject('airpotStores')
+// @observer
 
-@observer
-function App() {
+function App({ airpotStoresMobx }) {
     const [tabIndex, setTabIndex] = useState(1)
     const [tabType, setTabType] = useState(1)
-    const mobxAirportList = airpotStores.airportlist
-    const dispatch = useDispatch()
+    let mobxAirportList = airpotStoresMobx.airportlist
     // let timer = null
     // let scrollTop = 0
-
     const handleTab = (event) => {
-        console.log(tabIndex, tabType)
         const tab = isNaN(parseInt(event.target.getAttribute('index')))
             ? parseInt(event.target.parentNode.getAttribute('index'))
             : parseInt(event.target.getAttribute('index'))
@@ -49,7 +46,7 @@ function App() {
             .then((data) => {
                 //data是请求数据
                 if (data.code === 200) {
-                    airpotStores.setAirportlist(data.data)
+                    airpotStoresMobx.setAirportlist(data.data)
                 }
             })
             .catch((e) => {
@@ -118,7 +115,7 @@ function App() {
             </div>
             <div className='list-box'>
                 <ul className='list-content'>
-                    {reduxAirportList.map((item, idnex) => {
+                    {airpotStoresMobx.airportlist.map((item, idnex) => {
                         return (
                             <li className='list-row item' key={item._id}>
                                 <div className='airpot-content'>
@@ -236,4 +233,5 @@ function App() {
     )
 }
 
-export default App
+export default inject('airpotStoresMobx')(observer(App))
+// export default App

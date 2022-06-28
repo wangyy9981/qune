@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { initairport } from '../redux/action/airport'
 import './App.scss'
 
 function App() {
     const [tabIndex, setTabIndex] = useState(1)
     const [tabType, setTabType] = useState(1)
     const [airportList, setAirportList] = useState([])
-    // const reduxAirportList = useSelector((state) => state.airportList)
-    const dispatch = useDispatch()
     // let timer = null
     // let scrollTop = 0
 
     const handleTab = (event) => {
-        console.log(tabIndex, tabType)
         const tab = isNaN(parseInt(event.target.getAttribute('index')))
             ? parseInt(event.target.parentNode.getAttribute('index'))
             : parseInt(event.target.getAttribute('index'))
@@ -50,7 +45,6 @@ function App() {
                 //data是请求数据
                 if (data.code === 200) {
                     setAirportList(data.data)
-                    // dispatch(initairport(data.data))
                 }
             })
             .catch((e) => {

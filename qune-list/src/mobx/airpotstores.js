@@ -1,8 +1,9 @@
 import { action, observable } from 'mobx'
 class AirpotStoresMobx {
-    // @observable airportlist = []
-    // @action setAirportlist(value) {
-    //     this.airportlist = value
-    // }
+    @observable airportlist = []
+    @action setAirportlist(value) {
+        this.airportlist = value
+        console.log(this.airportlist)
+    }
 }
-export default new AirpotStoresMobx()
+export default AirpotStoresMobx
