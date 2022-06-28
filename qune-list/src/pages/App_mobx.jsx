@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { initairport } from '../redux/action/airport'
+import { observer,inject } from 'mobx-react'
 import './App.scss'
+@inject('airpotStores')
 
+@observer
 function App() {
     const [tabIndex, setTabIndex] = useState(1)
     const [tabType, setTabType] = useState(1)
-    const [airportList, setAirportList] = useState([])
-    // const reduxAirportList = useSelector((state) => state.airportList)
+    const mobxAirportList = airpotStores.airportlist
     const dispatch = useDispatch()
     // let timer = null
     // let scrollTop = 0
@@ -49,8 +49,7 @@ function App() {
             .then((data) => {
                 //data是请求数据
                 if (data.code === 200) {
-                    setAirportList(data.data)
-                    // dispatch(initairport(data.data))
+                    airpotStores.setAirportlist(data.data)
                 }
             })
             .catch((e) => {
@@ -119,7 +118,7 @@ function App() {
             </div>
             <div className='list-box'>
                 <ul className='list-content'>
-                    {airportList.map((item, idnex) => {
+                    {reduxAirportList.map((item, idnex) => {
                         return (
                             <li className='list-row item' key={item._id}>
                                 <div className='airpot-content'>

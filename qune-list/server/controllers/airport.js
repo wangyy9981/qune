@@ -10,7 +10,7 @@ let resObj = {
 
 var priceSort = (arr) => {
     arr.sort((a, b) => {
-        return a.type - b.type
+        return a.price - b.price
     })
     return arr
 }
@@ -43,7 +43,19 @@ var airportSort = (arr, type) => {
             newArr = [...timeSort(directArr), ...timeSort(relayArr)]
             break
         case 3:
+            newArr = [
+                ...timeSort(directArr).reverse(),
+                ...timeSort(relayArr).reverse(),
+            ]
+            break
+        case 4:
             newArr = [...priceSort(directArr), ...priceSort(relayArr)]
+            break
+        case 5:
+            newArr = [
+                ...priceSort(directArr).reverse(),
+                ...priceSort(relayArr).reverse(),
+            ]
             break
         default:
             newArr = arr

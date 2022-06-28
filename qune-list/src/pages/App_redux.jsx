@@ -6,8 +6,7 @@ import './App.scss'
 function App() {
     const [tabIndex, setTabIndex] = useState(1)
     const [tabType, setTabType] = useState(1)
-    const [airportList, setAirportList] = useState([])
-    // const reduxAirportList = useSelector((state) => state.airportList)
+    const reduxAirportList = useSelector((state) => state.airportList)
     const dispatch = useDispatch()
     // let timer = null
     // let scrollTop = 0
@@ -49,8 +48,8 @@ function App() {
             .then((data) => {
                 //data是请求数据
                 if (data.code === 200) {
-                    setAirportList(data.data)
-                    // dispatch(initairport(data.data))
+                    // setAirportList(data.data)
+                    dispatch(initairport(data.data))
                 }
             })
             .catch((e) => {
@@ -119,7 +118,7 @@ function App() {
             </div>
             <div className='list-box'>
                 <ul className='list-content'>
-                    {airportList.map((item, idnex) => {
+                    {reduxAirportList.map((item, idnex) => {
                         return (
                             <li className='list-row item' key={item._id}>
                                 <div className='airpot-content'>
