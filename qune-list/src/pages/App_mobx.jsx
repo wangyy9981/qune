@@ -7,7 +7,10 @@ import './App.scss'
 function App({ airpotStoresMobx }) {
     const [tabIndex, setTabIndex] = useState(1)
     const [tabType, setTabType] = useState(1)
-    let mobxAirportList = airpotStoresMobx.airportlist
+    const [mobxAirportList, setMobxAirportList] = useState(
+        airpotStoresMobx.airportlist
+    )
+
     // let timer = null
     // let scrollTop = 0
     const handleTab = (event) => {
@@ -47,6 +50,7 @@ function App({ airpotStoresMobx }) {
                 //data是请求数据
                 if (data.code === 200) {
                     airpotStoresMobx.setAirportlist(data.data)
+                    setMobxAirportList(airpotStoresMobx.airportlist)
                 }
             })
             .catch((e) => {
@@ -115,7 +119,7 @@ function App({ airpotStoresMobx }) {
             </div>
             <div className='list-box'>
                 <ul className='list-content'>
-                    {airpotStoresMobx.airportlist.map((item, idnex) => {
+                    {mobxAirportList.map((item, idnex) => {
                         return (
                             <li className='list-row item' key={item._id}>
                                 <div className='airpot-content'>
