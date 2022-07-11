@@ -6,6 +6,11 @@
     overflow: hidden;
     .navbar {
         background-color: #1ba9ba;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9;
     }
     .header {
         height: 0.88rem;
@@ -42,11 +47,11 @@
             p {
                 margin: 0;
             }
-            &:nth-child(2) {
-                background-color: #e7f8fc;
-                border-radius: 0.1rem;
-                color: #1ba9ba;
-            }
+        }
+        .time-action {
+            background-color: #e7f8fc;
+            border-radius: 0.1rem;
+            color: #1ba9ba;
         }
         .time-last {
             margin-left: 0.15rem;
@@ -69,6 +74,7 @@
         }
     }
     .list-box {
+        margin-top: 2.05rem;
         .list-content {
             background-color: #efefef;
             margin: 0;

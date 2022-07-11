@@ -2,10 +2,10 @@ const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors')
 const controller = require('./controller')
-const mongoDB = require('./mongodb/mongodb') // 连接mongodb
+// const mongoDB = require('./mongodb/mongodb') // 连接mongodb
 
 const app = new Koa()
-mongoDB()
+// mongoDB()
 // log request URL:
 app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`)

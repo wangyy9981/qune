@@ -4,9 +4,9 @@ import './App.scss'
 function App() {
     const [tabIndex, setTabIndex] = useState(1)
     const [tabType, setTabType] = useState(1)
+    const [timeIndex, setTimeIndex] = useState(1)
+    const [timeList, setTimeList] = useState([])
     const [airportList, setAirportList] = useState([])
-    // let timer = null
-    // let scrollTop = 0
 
     const handleTab = (event) => {
         const tab = isNaN(parseInt(event.target.getAttribute('index')))
@@ -31,6 +31,33 @@ function App() {
         }
     }
 
+    const handleTimeAction = (event) => {
+        const index = isNaN(parseInt(event.target.getAttribute('index')))
+            ? parseInt(event.target.parentNode.getAttribute('index'))
+            : parseInt(event.target.getAttribute('index'))
+        setTimeIndex(index)
+        setTabIndex(1)
+        setTabType(1)
+    }
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/getTimeList`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                //data是请求数据
+                if (data.code === 200) {
+                    setTimeList(data.data)
+                }
+            })
+    }, [])
+
     useEffect(() => {
         fetch(`http://localhost:8080/api/airporList?listtype=${tabType}`, {
             method: 'get',
@@ -52,20 +79,27 @@ function App() {
             })
     }, [tabType])
 
-    // window.onscroll = function (event) {
-    //     clearTimeout(timer)
-    //     const footbar = document.getElementsByClassName('footer')[0]
-    //     footbar.classList.contains('action')
-    //         ? console.log('滚动')
-    //         : footbar.classList.add('action')
-    //     let newTop =
-    //         document.documentElement.scrollTop || document.body.scrollTop
-    //     console.log('newTop', newTop)
-    //     newTop === scrollTop
-    //         ? footbar.classList.remove('action')
-    //         : (scrollTop = newTop)
-    //     console.log(footbar.classList)
-    // }
+    function footerAction() {
+        const footbar = document.getElementsByClassName('footer')[0]
+        console.log(footbar.classList.contains('action'))
+        footbar.classList.contains('action')
+            ? footbar.classList.remove('action')
+            : footbar.classList.add('action')
+        console.log(footbar.classList)
+    }
+    var timeout = null
+    function debounce(fn) {
+        //定义一个定时器
+        return function () {
+            if (timeout != null) clearTimeout(timeout) //清除这个定时器
+            timeout = setTimeout(function () {
+                console.log('action')
+                fn.apply(this)
+            }, 1000)
+        }
+    }
+
+    window.addEventListener('scroll', debounce(footerAction))
 
     return (
         <div className='App'>
@@ -79,32 +113,64 @@ function App() {
                     </span>
                     <i className='iconfont search'>&#xe622;</i>
                 </div>
-                <div className='time-list'>
-                    <div className='time-content'>
-                        <p className='time'>06-21</p>
-                        <p className='week'>周二</p>
-                        <p className='price'>￥550</p>
-                    </div>
-                    <div className='time-content'>
+                <div className='time-list' onClick={(e) => handleTimeAction(e)}>
+                    {timeList.map((item, index) => {
+                        return (
+                            <div
+                                className={`time-content ${
+                                    timeIndex === index ? 'time-action' : null
+                                }`}
+                                index={index}
+                            >
+                                <p className='time'>
+                                    {item.month}-{item.dates}
+                                </p>
+                                <p className='week'>{item.week}</p>
+                                <p className='price'>￥550</p>
+                            </div>
+                        )
+                    })}
+
+                    {/* <div
+                        className={`time-content ${
+                            timeIndex === 1 ? 'time-action' : null
+                        }`}
+                        index={1}
+                    >
                         <p className='time'>06-22</p>
                         <p className='week'>周三</p>
                         <p className='price'>￥550</p>
                     </div>
-                    <div className='time-content'>
+                    <div
+                        className={`time-content ${
+                            timeIndex === 2 ? 'time-action' : null
+                        }`}
+                        index={2}
+                    >
                         <p className='time'>06-23</p>
                         <p className='week'>周四</p>
                         <p className='price'>￥550</p>
                     </div>
-                    <div className='time-content'>
+                    <div
+                        className={`time-content ${
+                            timeIndex === 3 ? 'time-action' : null
+                        }`}
+                        index={3}
+                    >
                         <p className='time'>06-24</p>
                         <p className='week'>周五</p>
                         <p className='price'>￥550</p>
                     </div>
-                    <div className='time-content'>
+                    <div
+                        className={`time-content ${
+                            timeIndex === 4 ? 'time-action' : null
+                        }`}
+                        index={4}
+                    >
                         <p className='time'>06-25</p>
                         <p className='week'>周六</p>
                         <p className='price'>￥550</p>
-                    </div>
+                    </div> */}
                     <div className='time-content time-last'>
                         <i className='iconfont time-more'>&#xe612;</i>
                         <p className='more'>更多日期</p>
