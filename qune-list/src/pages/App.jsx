@@ -7,6 +7,8 @@ function App() {
     const [timeIndex, setTimeIndex] = useState(1)
     const [timeList, setTimeList] = useState([])
     const [airportList, setAirportList] = useState([])
+    const [isScroll, setIsScroll] = useState(false)
+    let timeout = null
 
     const handleTab = (event) => {
         const tab = isNaN(parseInt(event.target.getAttribute('index')))
@@ -79,27 +81,19 @@ function App() {
             })
     }, [tabType])
 
-    function footerAction() {
-        const footbar = document.getElementsByClassName('footer')[0]
-        console.log(footbar.classList.contains('action'))
-        footbar.classList.contains('action')
-            ? footbar.classList.remove('action')
-            : footbar.classList.add('action')
-        console.log(footbar.classList)
-    }
-    var timeout = null
-    function debounce(fn) {
+    function debounce() {
         //定义一个定时器
-        return function () {
-            if (timeout != null) clearTimeout(timeout) //清除这个定时器
-            timeout = setTimeout(function () {
-                console.log('action')
-                fn.apply(this)
-            }, 1000)
-        }
+        const footbar = document.getElementsByClassName('footer')[0]
+        footbar.classList.add('foot-action')
+        if (timeout !== null) clearTimeout(timeout) //清除这个定时器
+        timeout = setTimeout(function () {
+            footbar.classList.remove('foot-action')
+        }, 1000)
     }
 
-    window.addEventListener('scroll', debounce(footerAction))
+    useEffect(() => {
+        window.addEventListener('scroll', debounce)
+    }, [])
 
     return (
         <div className='App'>

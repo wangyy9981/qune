@@ -1,31 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <style>
+            div {
+                width: 100px;
+                height: 100px;
+                background: red;
+                transition: width 2s;
+            }
+
+            div:hover {
+                width: 300px;
+            }
+        </style>
     </head>
     <body>
-        <script>
-            var g1 = new Date('')
+        <h1>transition 属性</h1>
 
-            // (YYYY-MM-DD)
+        <p>请把鼠标悬停在下面的 div 元素上，来查看过渡效果：</p>
 
-            var g2 = new Date('12-00')
-            console.log(g1.getTime() - g2.getTime())
-            if (g1.getTime() < g2.getTime()) document.write('g1 小于 g2')
-            else if (g1.getTime() > g2.getTime()) document.write('g1 大于 g2')
-            else document.write('两者相等')
+        <div></div>
 
-            function CompareDate(t1, t2) {
-                var date = new Date()
-                var a = t1.split(':')
-                var b = t2.split(':')
-                return date.setHours(a[0], a[1]) > date.setHours(b[0], b[1])
-            }
-            // 调用：
-            alert(CompareDate('12:00', '11:15'))
-        </script>
+        <p><b>注释：</b>本例在 Internet Explorer 9 和更早版本中不起作用。</p>
     </body>
 </html>
